@@ -12,7 +12,7 @@ import { HistoryProvider } from "./context/historyPath";
 import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ 
     <AnimatePresence>
       <BrowserRouter>
         <AuthProvider>
@@ -30,5 +30,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </AuthProvider>
       </BrowserRouter>
     </AnimatePresence>
-  </React.StrictMode>
+  
 );

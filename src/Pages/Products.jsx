@@ -5,7 +5,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { useFilter } from "../context/filterProduct";
 import Authenticated from "../Components/Authenticated";
 import { useToggle } from "../context/toggleContext";
-import useRefreshToken from "../hooks/useRefreshToken";
+
 import { useAuth } from "../context/AuthContext";
 
 const Products = () => {
@@ -21,7 +21,7 @@ const Products = () => {
     error,
   } = UseProducts();
 
-  const refresh = useRefreshToken();
+  
 
   const { setOpenAddProductModal } = useToggle();
 
@@ -82,13 +82,7 @@ const Products = () => {
               placeholder="Search Products Price"
             />
           </div>
-          <button
-            onClick={() => {
-              refresh();
-            }}
-          >
-            refresh
-          </button>
+          
         </div>
         <button
           onClick={() => {
@@ -225,7 +219,7 @@ const Products = () => {
                             </button>
                             <button
                               onClick={() => {
-                                // setSingleUserId(id);
+                                deleteProduct(id)
                                 // setOpenDeleteModal(true);
                               }}
                               className="p-1.5 text-xs hover:bg-red-700 hover:text-white transition-all ease-linear duration-300 font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-40"

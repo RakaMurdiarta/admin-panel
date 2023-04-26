@@ -44,6 +44,8 @@ const AddProduct = () => {
           setErrorTitle("");
         }
         console.log(result);
+
+        setOpenAddProductModal(false)
       })
       .catch((err) => {
         console.log(err);
@@ -67,8 +69,6 @@ const AddProduct = () => {
         });
       });
   };
-  console.log(errorPrice);
-  console.log(errorTitle);
 
   return (
     <div className={`fixed inset-0 z-50 overflow-y-auto`}>

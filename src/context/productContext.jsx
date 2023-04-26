@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useUserContext } from "./userContext";
 import { useAuth } from "./AuthContext";
 import useInterceptersAxios from "../hooks/useIntercepterAxiosPrivate";
-import axios from "axios";
+
 
 const ProductContext = createContext();
 
@@ -22,18 +22,17 @@ export const ProductProvider = ({ children }) => {
 
   const { auth } = useAuth();
 
-  const getProducts = () => {
+  const getProducts = async () => {
+    
+    setLoading(true);
     axiosPrivate
       .get("/admin/products")
       .then((respone) => {
         const { data } = respone.data;
-        setLoading(true);
+        
         setProducts(data);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1500);
-
         setError("");
+        setLoading(false)
       })
       .catch((error) => {
         setError(error.response.data.message);
@@ -41,14 +40,18 @@ export const ProductProvider = ({ children }) => {
       });
   };
 
-  let mounted = true;
   useEffect(() => {
+    let mounted = true;
+    
     if (mounted) {
+      console.log('render')
       getProducts();
     }
 
     return () => {
+      
       mounted = false;
+      
     };
   }, [auth]);
 
@@ -71,8 +74,8 @@ export const ProductProvider = ({ children }) => {
   };
 
   const deleteProduct = async (id) => {
-    await axios.get(`http://localhost:8000/admin/del/${id}`);
-    getProducts();
+    await axiosPrivate.get(`/admin/del/${id}`);
+    await getProducts();
   };
 
   return (

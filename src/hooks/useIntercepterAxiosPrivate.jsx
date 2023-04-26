@@ -8,9 +8,12 @@ const useInterceptersAxios = () => {
   const { auth } = useAuth();
 
   useEffect(() => {
+    console.log('intecepter run')
     const requestInterceptors = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config?.headers["authorization"]) {
+          console.log('set headers')
+
           config.headers["authorization"] = `Bearer ${auth?.token}`;
         }
         return config;
@@ -25,7 +28,7 @@ const useInterceptersAxios = () => {
 
       async (error) => {
         const prevRequest = error?.config;
-        console.log(prevRequest?.sent, "kjjb,b");
+        
 
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           console.log("jwt expired");
@@ -43,7 +46,7 @@ const useInterceptersAxios = () => {
       axiosPrivate.interceptors.request.eject(requestInterceptors);
       axiosPrivate.interceptors.response.eject(responseInterceptors);
     };
-  }, [auth, refresh]);
+  }, [auth,refresh]);
 
   return axiosPrivate;
 };

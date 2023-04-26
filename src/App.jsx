@@ -7,11 +7,14 @@ import ConfirmDeleteModal from "./Components/ConfirmDeleteModal";
 import Auth from "./Components/Auth";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import PersitLogin from "./Components/PersitLogin";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        {/* {private route} */}
+        <Route element = {<PersitLogin/>}>
         <Route
           path="users"
           element={
@@ -28,7 +31,9 @@ const App = () => {
             </Auth>
           }
         />
-        <Route path="demo" element={<ConfirmDeleteModal />} />
+        </Route>
+
+        {/* {public Route} */}
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />

@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
 import { useToggle } from "../context/toggleContext";
+import useInterceptersAxios from "../hooks/useIntercepterAxiosPrivate";
+
 
 const AddUserForm = () => {
   const { openAddUserModal, setOpenAddUserModal } = useToggle();
+  const axiosPrivate = useInterceptersAxios()
+  
   const addUserRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();

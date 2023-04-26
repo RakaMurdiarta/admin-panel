@@ -8,7 +8,7 @@ export const HistoryProvider = ({ children }) => {
   const [historyPath, setHistoryPath] = useState("");
   const location = useLocation();
 
-  console.log(historyPath);
+
 
   return (
     <HistoryPathContext.Provider value={{ historyPath, setHistoryPath }}>

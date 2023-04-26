@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 // import useInterceptersAxios from "../hooks/useIntercepterAxiosPrivate";
 import { useAuth } from "./AuthContext";
-import Axios from "../api/Axios";
+import Axios, { axiosPrivate } from "../api/Axios";
 
 const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
@@ -18,13 +18,11 @@ export const UserProvider = ({ children }) => {
   const { auth } = useAuth();
   useEffect(() => {
     let isMounted = true;
+    console.log('user true')
     const controller = new AbortController();
     const fetcher = () => {
-      Axios.get("/admin/users", {
+      axiosPrivate.get("/admin/users", {
         signal: controller.signal,
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
       })
         .then((respone) => {
           const { data } = respone.data;
@@ -33,13 +31,14 @@ export const UserProvider = ({ children }) => {
           setError("");
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     };
-
+    
     fetcher();
 
     return () => {
+      
       isMounted = false;
       controller.abort();
     };
