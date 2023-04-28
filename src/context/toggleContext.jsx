@@ -7,7 +7,8 @@ export const ToggleProvider = ({ children }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openAddUserModal, setOpenAddUserModal] = useState(false);
   const [openAddProductModal, setOpenAddProductModal] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   return (
     <ToggleContext.Provider
@@ -22,6 +23,8 @@ export const ToggleProvider = ({ children }) => {
         setOpenAddUserModal,
         openAddProductModal,
         setOpenAddProductModal,
+        isLoading,
+        setLoading,
       }}
     >
       {children}

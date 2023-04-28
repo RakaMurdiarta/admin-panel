@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { sidebarItems } from "../constant/ItemSidebar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToggle } from "../context/toggleContext";
 import { useHistoryPath } from "../Store/store";
 import { useHistory } from "../context/historyPath";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { CgLogOut } from "react-icons/cg";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import useLogout from "../hooks/useLogout";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
   const { openSidebar, setOpenSidebar } = useToggle();
   const { pathname } = useLocation();
   const { historyPath, setHistoryPath } = useHistory();
+  const logout = useLogout();
+  const { auth } = useAuth();
+  const { setLoading } = useToggle();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // console.log("sidebar", historyPath);
+  const signOut = async () => {
+    if (auth?.user) {
+      await logout();
+      navigate("/", { state: { path: location.pathname }, replace: true });
+    }
+  };
+
   return (
     <aside
       className={`w-60 ${
@@ -49,7 +62,7 @@ const Sidebar = () => {
       {/* click sidebar */}
       <button
         onClick={() => setOpenSidebar(!openSidebar)}
-        className={`-right-6 transition-all ease-in-out duration-500 flex border-4 border-blue-100 absolute top-3 rounded-full ${
+        className={`-right-6 transition-all ease-in-out duration-500 flex border-4 border-blue-100 hover:scale-110 absolute top-3 rounded-full ${
           !openSidebar && `rotate-180`
         } bg-slate-300`}
       >
@@ -89,22 +102,32 @@ const Sidebar = () => {
       <div
         className={`mini ${
           openSidebar ? "hidden" : "flex"
-        } mt-20 flex-col space-y-2 w-full h-[calc(100vh)]`}
+        } flex-col space-y-2 w-full h-[calc(100vh)] justify-between`}
       >
-        {sidebarItems &&
-          sidebarItems.map((item, index) => {
-            const { icon: Icon, path } = item;
-            return (
-              <div
-                key={index}
-                className="hover:ml-4 justify-end pr-3 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex"
-              >
-                <Link to={path} onClick={() => setHistoryPath(path)}>
-                  <Icon size={25} />
-                </Link>
-              </div>
-            );
-          })}
+        <div className="mt-20">
+          {sidebarItems &&
+            sidebarItems.map((item, index) => {
+              const { icon: Icon, path } = item;
+              return (
+                <div
+                  key={index}
+                  className="hover:ml-4 justify-end pr-3 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex"
+                >
+                  <Link to={path} onClick={() => setHistoryPath(path)}>
+                    <Icon size={25} />
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
+        <button
+          onClick={() => {
+            signOut();
+          }}
+          className="flex bg-[#1E293B] items-center ease-in-out duration-300 transition-all rounded-full justify-end p-3 hover:translate-x-3 cursor-pointer"
+        >
+          <RiLogoutBoxRLine title="logout" size={20} color="white" />
+        </button>
       </div>
     </aside>
   );

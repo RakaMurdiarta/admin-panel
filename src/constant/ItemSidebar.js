@@ -15,7 +15,7 @@ export {
 export const sidebarItems = [
   {
     name: "Dashboard",
-    path: "/",
+    path: "/dashboard",
     icon: RiDashboard3Line,
   },
   {

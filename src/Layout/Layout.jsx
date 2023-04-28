@@ -15,9 +15,12 @@ const Layout = () => {
     openDeleteModal,
     openAddUserModal,
     openAddProductModal,
+    isLoading,
   } = useToggle();
 
   const location = useLocation();
+
+  console.log(isLoading);
 
   return (
     <section>
@@ -25,6 +28,7 @@ const Layout = () => {
       {openDeleteModal && <ConfirmDeleteModal />}
       {openAddUserModal && <AddUserForm />}
       {openAddProductModal && <AddProduct />}
+      {isLoading && <AddProduct />}
 
       {/* Header */}
       <Navbar />
@@ -68,12 +72,9 @@ const Layout = () => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-                <Link
-                  to="/users"
-                  className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white"
-                >
+                <div className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">
                   {location.pathname.slice(1)}
-                </Link>
+                </div>
               </div>
             </li>
           </ol>

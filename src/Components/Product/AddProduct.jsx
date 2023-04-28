@@ -22,7 +22,7 @@ const AddProduct = () => {
     setFile(fileSet);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (!file) {
@@ -36,38 +36,20 @@ const AddProduct = () => {
     fileUpload.append("title", productNameRef.current.value);
     fileUpload.append("description", descRef.current.value);
 
-    axiosPrivate
-      .post(ADDPRODUCT_URL, fileUpload)
-      .then((result) => {
-        if (result) {
-          setErrorPrice("");
-          setErrorTitle("");
-        }
-        console.log(result);
+    try {
+      const response = await axiosPrivate.post(ADDPRODUCT_URL, fileUpload);
 
-        setOpenAddProductModal(false)
-      })
-      .catch((err) => {
-        console.log(err);
-        if (
-          err.response.data.message == "jwt expired" &&
-          err.response.status === 403
-        ) {
-          return navigate("/login", {
-            state: { path: location.pathname },
-            replace: true,
-          });
-        }
-        const errorValue = JSON.parse(err.response.data.message);
-        errorValue?.forEach((obj) => {
-          if (obj.param === "price" && obj?.param) {
-            setErrorPrice(obj.msg);
-          }
-          if (obj.param === "title" && obj?.param) {
-            setErrorTitle(obj.msg);
-          }
-        });
-      });
+      if (!response) {
+        setOpenAddProductModal(false);
+      }
+
+      setErrorPrice("");
+      setErrorTitle("");
+    } catch (error) {
+      console.log(error, "kajdbkajbkadbkabkad");
+    } finally {
+      setOpenAddProductModal(false);
+    }
   };
 
   return (
