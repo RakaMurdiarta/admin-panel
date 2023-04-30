@@ -7,7 +7,7 @@ export const ToggleProvider = ({ children }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openAddUserModal, setOpenAddUserModal] = useState(false);
   const [openAddProductModal, setOpenAddProductModal] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(true);
+  const [openSidebar, setOpenSidebar] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   return (

@@ -31,6 +31,7 @@ const Login = () => {
         setAuth({
           user: result.data.user,
           token: result.data.token,
+          id: result.data.userId,
         });
 
         // console.log(result.data.token);

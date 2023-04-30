@@ -12,6 +12,8 @@ import Orders from "./Pages/Orders";
 import Dashboard from "./Pages/Dashboard";
 import HomePages from "./Pages/HomePages";
 import Categories from "./Pages/Categories";
+import EditProduct from "./Components/Product/EditProduct";
+import Addproduct2 from "./Components/Product/Addproduct2";
 
 const App = () => {
   return (
@@ -24,8 +26,10 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/categories" element={<Categories />} />
+          <Route path="product/:id" element={<EditProduct />} />
+          <Route path="product/newproduct" element={<Addproduct2 />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="categories" element={<Categories />} />
         </Route>
 
         {/* {public Route} */}

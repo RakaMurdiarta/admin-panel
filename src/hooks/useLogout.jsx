@@ -13,6 +13,7 @@ const useLogout = () => {
       const response = await Axios.get("/auth/logout", {
         withCredentials: true,
       });
+      navigate("/login", { state: { path: location.pathname }, replace: true });
     } catch (error) {
       console.log(error);
     }

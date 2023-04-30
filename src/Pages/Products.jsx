@@ -7,6 +7,7 @@ import Authenticated from "../Components/Authenticated";
 import { useToggle } from "../context/toggleContext";
 import useRefreshToken from "../hooks/useRefreshToken";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const {
@@ -50,8 +51,6 @@ const Products = () => {
         if (searchFilter.price === "Greater then 1000000") {
           return parseInt(set.price) > 1000000;
         }
-
-        // return searchFilter.price < parseInt(set.price);
       });
     }
 
@@ -87,7 +86,7 @@ const Products = () => {
               }}
               className="border py-2 rounded-md w-auto px-2 bg-slate-200 text-sm"
             >
-              <option value="">Filter Price:</option>
+              <option value="">Filter Price: All</option>
               <option value="Less then 500000">Less than Rp.500.000</option>
               <option value="Greater then 1000000">
                 Greater then Rp.1.000.000
@@ -103,17 +102,18 @@ const Products = () => {
             /> */}
           </div>
         </div>
-        <button
-          onClick={() => {
-            setOpenAddProductModal(true);
-          }}
+        <Link
+          to={"/product/newproduct"}
+          // onClick={() => {
+          //   setOpenAddProductModal(true);
+          // }}
           className="bg-green-600 p-2 rounded-md w-40 text-white text-sm font-medium"
         >
           <div className="flex items-center gap-2">
             <IoMdAddCircleOutline size={25} />
             <p>Add Product</p>
           </div>
-        </button>
+        </Link>
       </div>
       {/* {Versi Desktop} */}
       <div
@@ -227,16 +227,13 @@ const Products = () => {
 
                         <td className="text-xs p-3 py-5 whitespace-nowrap">
                           <div className="flex justify-center items-center gap-3">
-                            <button
-                              onClick={() => {
-                                // setSingleUserId(id);
-                                // setOpenEditModal(true);
-                              }}
+                            <Link
+                              to={`/product/${id}`}
                               id="button-edit"
                               className="p-1.5 hover:bg-green-700 hover:text-white transition-all ease-linear duration-300 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-40"
                             >
                               Edit
-                            </button>
+                            </Link>
                             <button
                               onClick={() => {
                                 deleteProduct(id);

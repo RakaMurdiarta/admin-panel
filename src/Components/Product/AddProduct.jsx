@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useToggle } from "../../context/toggleContext";
 import useInterceptersAxios from "../../hooks/useIntercepterAxiosPrivate";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const AddProduct = () => {
   const { setOpenAddProductModal } = useToggle();
@@ -16,6 +17,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPrivate = useInterceptersAxios();
+  const { auth } = useAuth();
 
   const handleFile = (e) => {
     const fileSet = e.target.files[0];
