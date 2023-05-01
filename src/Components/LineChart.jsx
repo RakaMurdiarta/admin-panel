@@ -96,7 +96,7 @@ const LineChart = () => {
         usePointStyle: true,
         padding: 10,
         bodyFont: {
-          size: 10,
+          size: 14,
           width: 100,
         },
         callbacks: {
@@ -127,13 +127,16 @@ const LineChart = () => {
         },
         min: 0,
         ticks: {
+          display: false,
           beginAtZero: true,
           font: {
             size: 15,
           },
+
           padding: 10,
         },
         border: {
+          display: false,
           color: "white",
         },
       },
