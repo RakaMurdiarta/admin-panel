@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 // import useInterceptersAxios from "../hooks/useIntercepterAxiosPrivate";
 import { useAuth } from "./AuthContext";
 import Axios, { axiosPrivate } from "../api/Axios";
+import { BiError, BiErrorCircle } from "react-icons/bi";
 
 const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
@@ -18,27 +19,26 @@ export const UserProvider = ({ children }) => {
   const { auth } = useAuth();
   useEffect(() => {
     let isMounted = true;
-    console.log('user true')
     const controller = new AbortController();
     const fetcher = () => {
-      axiosPrivate.get("/admin/users", {
-        signal: controller.signal,
-      })
+      axiosPrivate
+        .get("/admin/users", {
+          signal: controller.signal,
+        })
         .then((respone) => {
           const { data } = respone.data;
-          console.log(data);
+
           isMounted && setUsers(data);
           setError("");
         })
         .catch((err) => {
-          // console.log(err);
+          setError(err?.response?.data?.message);
         });
     };
-    
+
     fetcher();
 
     return () => {
-      
       isMounted = false;
       controller.abort();
     };
@@ -47,8 +47,8 @@ export const UserProvider = ({ children }) => {
   const deleteUser = (userid) => {
     axios
       .post("http://localhost:8000/admin/delete/user", { id: userid })
-      .then((respone) => {
-        fetcher();
+      .then((response) => {
+        setUsers(response.data.data);
       });
   };
 

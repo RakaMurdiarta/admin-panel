@@ -6,7 +6,7 @@ import axios from "axios";
 const EditUserModal = () => {
   const modalRef = useRef("");
   const { openEditModal, setOpenEditModal } = useToggle();
-  const { fetcher, singleUserId, setUsers } = useUserContext();
+  const { singleUserId, setUsers } = useUserContext();
 
   const [singleUser, setSingleUser] = useState({ _id: "", email: "" });
   const [name, setName] = useState("");
@@ -66,8 +66,8 @@ const EditUserModal = () => {
       }
     );
 
-    setOpenEditModal(false);
     setUsers(response.data.data);
+    setOpenEditModal(false);
   };
   return (
     <div

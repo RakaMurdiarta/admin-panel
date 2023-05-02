@@ -9,7 +9,7 @@ import Axios from "../api/Axios";
 
 const Login = () => {
   const location = useLocation();
-  const redirectPath = location.state?.path || "/";
+  const redirectPath = location.state?.path || "/dashboard";
   const navigate = useNavigate();
   const LOGIN_URL = "/auth/login";
 
@@ -29,8 +29,9 @@ const Login = () => {
     })
       .then((result) => {
         setAuth({
-          user: result.data.name,
+          user: result.data.user,
           token: result.data.token,
+          id: result.data.userId,
         });
 
         // console.log(result.data.token);

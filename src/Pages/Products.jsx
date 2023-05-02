@@ -5,8 +5,9 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { useFilter } from "../context/filterProduct";
 import Authenticated from "../Components/Authenticated";
 import { useToggle } from "../context/toggleContext";
-
+import useRefreshToken from "../hooks/useRefreshToken";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const {
@@ -20,8 +21,9 @@ const Products = () => {
     isLoading,
     error,
   } = UseProducts();
+  const refresh = useRefreshToken();
 
-  
+  const { auth } = useAuth();
 
   const { setOpenAddProductModal } = useToggle();
 
@@ -43,7 +45,12 @@ const Products = () => {
 
     if (searchFilter.price) {
       tempProduct = tempProduct.filter((set) => {
-        return searchFilter.price < parseInt(set.price);
+        if (searchFilter.price === "Less then 500000") {
+          return parseInt(set.price) < 500000;
+        }
+        if (searchFilter.price === "Greater then 1000000") {
+          return parseInt(set.price) > 1000000;
+        }
       });
     }
 
@@ -73,28 +80,40 @@ const Products = () => {
             />
           </div>
           <div>
-            <input
+            <select
+              onChange={(e) => {
+                setSearchFilter((prev) => ({ ...prev, price: e.target.value }));
+              }}
+              className="border py-2 rounded-md w-auto px-2 bg-slate-200 text-sm"
+            >
+              <option value="">Filter Price: All</option>
+              <option value="Less then 500000">Less than Rp.500.000</option>
+              <option value="Greater then 1000000">
+                Greater then Rp.1.000.000
+              </option>
+            </select>
+            {/* <input
               onChange={(e) => {
                 setSearchFilter((prev) => ({ ...prev, price: e.target.value }));
               }}
               className="outline-none border py-2 w-56 rounded-md pl-2 text-sm"
               type="number"
               placeholder="Search Products Price"
-            />
+            /> */}
           </div>
-          
         </div>
-        <button
-          onClick={() => {
-            setOpenAddProductModal(true);
-          }}
+        <Link
+          to={"/product/newproduct"}
+          // onClick={() => {
+          //   setOpenAddProductModal(true);
+          // }}
           className="bg-green-600 p-2 rounded-md w-40 text-white text-sm font-medium"
         >
           <div className="flex items-center gap-2">
             <IoMdAddCircleOutline size={25} />
             <p>Add Product</p>
           </div>
-        </button>
+        </Link>
       </div>
       {/* {Versi Desktop} */}
       <div
@@ -167,10 +186,11 @@ const Products = () => {
                     return (
                       <motion.tr
                         key={index}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0, x: -100 }}
+                        animate={{ opacity: 1, x: 0 }}
                         exit={{
                           opacity: 0,
+                          x: -1000,
                         }}
                         transition={{ delay: index * 0.01 }}
                         className={`${
@@ -207,20 +227,16 @@ const Products = () => {
 
                         <td className="text-xs p-3 py-5 whitespace-nowrap">
                           <div className="flex justify-center items-center gap-3">
-                            <button
-                              onClick={() => {
-                                // setSingleUserId(id);
-                                // setOpenEditModal(true);
-                              }}
+                            <Link
+                              to={`/product/${id}`}
                               id="button-edit"
                               className="p-1.5 hover:bg-green-700 hover:text-white transition-all ease-linear duration-300 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-40"
                             >
                               Edit
-                            </button>
+                            </Link>
                             <button
                               onClick={() => {
-                                deleteProduct(id)
-                                // setOpenDeleteModal(true);
+                                deleteProduct(id);
                               }}
                               className="p-1.5 text-xs hover:bg-red-700 hover:text-white transition-all ease-linear duration-300 font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-40"
                             >

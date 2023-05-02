@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { auth } = useAuth();
-  // const user = JSON.parse(localStorage.getItem("user"));
-  console.log(auth, "kdabdabd,dbS");
+
+  console.log(auth, "navbarrr");
   return (
     <header
       className={`fixed w-full z-30 flex bg-white dark:bg-[#0F172A] p-2 items-center justify-between h-16 pl-10`}
@@ -19,10 +19,16 @@ const Navbar = () => {
           <div className="flex-none flex justify-center">
             {!auth.user ? (
               <div className="flex gap-2 text-white font-medium">
-                <Link to={'/login'} className="px-3 py-1 border border-white bg-transparent rounded-lg hover:bg-blue-900 hover:scale-105 transition-all duration-100 hover:border-none">
+                <Link
+                  to={"/login"}
+                  className="px-3 py-1 border border-white bg-transparent rounded-lg hover:bg-blue-900 hover:scale-105 transition-all duration-100 hover:border-none"
+                >
                   signin
                 </Link>
-                <Link to={'/register'} className="px-3 py-1 border border-white bg-transparent rounded-lg hover:bg-blue-900 hover:scale-105 transition-all duration-100 hover:border-none">
+                <Link
+                  to={"/register"}
+                  className="px-3 py-1 border border-white bg-transparent rounded-lg hover:bg-blue-900 hover:scale-105 transition-all duration-100 hover:border-none"
+                >
                   signup
                 </Link>
               </div>

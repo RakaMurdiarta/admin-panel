@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import useRefreshToken from "../hooks/useRefreshToken";
 import { Outlet } from "react-router-dom";
+import Loading from "./Spinner/Loading";
 
 const PersitLogin = () => {
   const [loading, setLoading] = useState(true);
@@ -20,17 +21,15 @@ const PersitLogin = () => {
       }
     };
 
-    !auth?.token ? verifyToken() : setLoading(false)
+    !auth?.token ? verifyToken() : setLoading(false);
   }, []);
 
-  useEffect(()=>{
-    console.log(loading)
-    console.log(`AT : ${auth.token}`)
-  },[loading])
+  // useEffect(()=>{
+  //   console.log(loading)
+  //   console.log(`AT : ${auth.token}`)
+  // },[loading])
 
-  return <>
-    {loading ?<h1>Loading .... </h1> : <Outlet/>}
-  </>;
+  return <>{loading ? <Loading /> : <Outlet />}</>;
 };
 
 export default PersitLogin;

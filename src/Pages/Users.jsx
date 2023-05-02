@@ -37,7 +37,7 @@ const Users = () => {
             placeholder="Search Name"
           />
         </div>
-        <button
+        {/* <button
           onClick={() => {
             setOpenAddUserModal(true);
           }}
@@ -47,7 +47,7 @@ const Users = () => {
             <IoMdAddCircleOutline size={25} />
             <p>Add User</p>
           </div>
-        </button>
+        </button> */}
       </div>
       {/* {Versi Desktop} */}
       <div
